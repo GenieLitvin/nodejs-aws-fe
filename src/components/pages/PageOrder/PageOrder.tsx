@@ -98,8 +98,9 @@ const Form = (props: FormikProps<FormikValues>) => {
   );
 }
 
+
 export default function PageOrder() {
-  const {id} = useParams();
+  const { id } = useParams<{ id: string }>();
   const [order, setOrder] = useState<any>({});
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -120,7 +121,7 @@ export default function PageOrder() {
     ];
     Promise.all(promises)
       .then(([{data: products}, {data: order}]) => {
-        const cartItems: CartItem[] = order.items.map((i: OrderItem) => ({
+        const cartItems: CartItem[] =order.items.map((i: OrderItem) => ({
           product: products.find((p: Product) => p.id === i.productId),
           count: i.count
         }));
