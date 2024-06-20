@@ -9,9 +9,9 @@ export class StaticSite extends Construct {
   constructor(parent: Stack, name: string) {
     super(parent, name);
 
-    const cloudfrontOAI = new cloudfront.OriginAccessIdentity(this, "JSCC-OAI")
+    const cloudfrontOAI = new cloudfront.OriginAccessIdentity(this, "NodeAwsShopFe-OAI")
 
-    const siteBucket = new s3.Bucket(this,"JSCCStaticBucket",{
+    const siteBucket = new s3.Bucket(this,"NodeAwsShopFeBucket",{
       bucketName:"node-aws-shop-fe",
       websiteIndexDocument:"index.html",
       publicReadAccess:false,
@@ -25,7 +25,7 @@ export class StaticSite extends Construct {
     }))
 
     //&
-    const distribution = new cloudfront.CloudFrontWebDistribution(this, "JSCC-distribution",{
+    const distribution = new cloudfront.CloudFrontWebDistribution(this, "NodeAwsShopFe-distribution",{
       originConfigs:[{
         s3OriginSource:{
           s3BucketSource:siteBucket,
@@ -37,7 +37,7 @@ export class StaticSite extends Construct {
       }]
     })
 
-    new s3deploy.BucketDeployment(this, "JSCC-Bucket-Deployment",{
+    new s3deploy.BucketDeployment(this, "NodeAwsShopFe-Bucket-Deployment",{
       sources:[s3deploy.Source.asset("./build")],
       destinationBucket:siteBucket,
       distribution,
