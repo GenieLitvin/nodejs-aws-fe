@@ -24,7 +24,14 @@ export class StaticSite extends Construct {
       principals:[new iam.CanonicalUserPrincipal(cloudfrontOAI.cloudFrontOriginAccessIdentityS3CanonicalUserId)]
     }))
 
-    //&
+  const customErrorResponseProperty: cloudfront.CfnDistribution.CustomErrorResponseProperty = {
+    errorCode: 403,
+    errorCachingMinTtl: 123,
+    responseCode: 200,
+    responsePagePath: '/index.html',
+  };
+
+    //CloudFront
     const distribution = new cloudfront.CloudFrontWebDistribution(this, "NodeAwsShopFe-distribution",{
       originConfigs:[{
         s3OriginSource:{
@@ -34,8 +41,10 @@ export class StaticSite extends Construct {
         behaviors:[{
           isDefaultBehavior:true
         }]
-      }]
+      }],
+      errorConfigurations:[customErrorResponseProperty],
     })
+
 
     new s3deploy.BucketDeployment(this, "NodeAwsShopFe-Bucket-Deployment",{
       sources:[s3deploy.Source.asset("./build")],
