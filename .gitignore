@@ -23,5 +23,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+cdk.out
+dist
 /.idea
 .vscode
