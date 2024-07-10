@@ -12,6 +12,6 @@ class MyStaticSiteStack extends cdk.Stack {
 
 const app = new cdk.App();
 
-new MyStaticSiteStack(app, 'NodeAwsShopFeStack1');
+new MyStaticSiteStack(app, 'NodeAwsShopFeStack');
 
 app.synth();
