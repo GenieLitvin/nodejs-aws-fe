@@ -6,12 +6,12 @@ class MyStaticSiteStack extends cdk.Stack {
   constructor(parent: cdk.App, name: string) {
     super(parent, name);
 
-    new StaticSite(this, 'JSCCStaticWebsite');
+    new StaticSite(this, 'node-aws-shop-fe-web');
   }
 }
 
 const app = new cdk.App();
 
-new MyStaticSiteStack(app, 'MyJSCCStaticWebsite');
+new MyStaticSiteStack(app, 'NodeAwsShopFeStack1');
 
 app.synth();

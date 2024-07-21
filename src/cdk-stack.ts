@@ -9,10 +9,10 @@ export class StaticSite extends Construct {
   constructor(parent: Stack, name: string) {
     super(parent, name);
 
-    const cloudfrontOAI = new cloudfront.OriginAccessIdentity(this, "JSCC-OAI")
+    const cloudfrontOAI = new cloudfront.OriginAccessIdentity(this, `${name}-OAI`)
 
-    const siteBucket = new s3.Bucket(this,"JSCCStaticBucket",{
-      bucketName:"auto-rs-first-app",
+    const siteBucket = new s3.Bucket(this,`${name}Bucket`,{
+      bucketName:`${name}-bucket`,
       websiteIndexDocument:"index.html",
       publicReadAccess:false,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL
@@ -24,8 +24,15 @@ export class StaticSite extends Construct {
       principals:[new iam.CanonicalUserPrincipal(cloudfrontOAI.cloudFrontOriginAccessIdentityS3CanonicalUserId)]
     }))
 
-    //&
-    const distribution = new cloudfront.CloudFrontWebDistribution(this, "JSCC-distribution",{
+  const customErrorResponseProperty: cloudfront.CfnDistribution.CustomErrorResponseProperty = {
+    errorCode: 403,
+    errorCachingMinTtl: 123,
+    responseCode: 200,
+    responsePagePath: '/index.html',
+  };
+
+    //CloudFront
+    const distribution = new cloudfront.CloudFrontWebDistribution(this, `${name}-distribution`,{
       originConfigs:[{
         s3OriginSource:{
           s3BucketSource:siteBucket,
@@ -34,10 +41,12 @@ export class StaticSite extends Construct {
         behaviors:[{
           isDefaultBehavior:true
         }]
-      }]
+      }],
+      errorConfigurations:[customErrorResponseProperty],
     })
 
-    new s3deploy.BucketDeployment(this, "JSCC-Bucket-Deployment",{
+
+    new s3deploy.BucketDeployment(this,`${name}-Bucket-Deployment`,{
       sources:[s3deploy.Source.asset("./build")],
       destinationBucket:siteBucket,
       distribution,
