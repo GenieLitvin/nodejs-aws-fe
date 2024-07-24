@@ -118,7 +118,11 @@ export default function PageCart() {
         items: cartItems.map(i => ({productId: i.product.id, count: i.count})),
         address
       });
-      axios.put(`${API_PATHS.order}/order`, formattedValues)
+      axios.post(`${API_PATHS.order}/api/profile/cart/checkout`, formattedValues, {
+        headers: {
+          Authorization: `Basic ${localStorage.getItem('authorization_token')}`,
+        },
+      })
         .then(() => {
           dispatch(clearCart());
           setActiveStep(activeStep + 1);
