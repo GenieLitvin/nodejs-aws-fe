@@ -49,7 +49,8 @@ export default function Orders() {
               </TableCell>
               <TableCell align="right">{order.items.length}</TableCell>
               <TableCell align="right">{order.address?.address}</TableCell>
-              <TableCell align="right">{order.statusHistory[order.statusHistory.length-1].status.toUpperCase()}</TableCell>
+              <TableCell align="right">{order.status}</TableCell>
+             
               <TableCell align="right">
                 <Button size="small" color="primary" component={Link} to={`/admin/order/${order.id}`}>
                   Manage
