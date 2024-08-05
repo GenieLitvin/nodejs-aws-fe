@@ -8,7 +8,7 @@ const API_PATHS = {
   order:  cart_path,
   import:  `https://92mkrazgkg.execute-api.eu-west-1.amazonaws.com/prod`,
   bff: be_path,
-  cart: cart_path,
+  cart: 'http://genielitvin-cart-api-dev4.eu-west-1.elasticbeanstalk.com/' ,
 
 };
 /// 
