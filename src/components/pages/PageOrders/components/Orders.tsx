@@ -45,11 +45,12 @@ export default function Orders() {
           {orders.map((order: any) => (
             <TableRow key={order.id}>
               <TableCell component="th" scope="row">
-                {order.address?.firstName} {order.address?.lastName}
+                {order.delivery?.firstName} {order.delivery?.lastName}
               </TableCell>
               <TableCell align="right">{order.items.length}</TableCell>
-              <TableCell align="right">{order.address?.address}</TableCell>
-              <TableCell align="right">{order.statusHistory[order.statusHistory.length-1].status.toUpperCase()}</TableCell>
+              <TableCell align="right">{order.delivery?.address}</TableCell>
+              <TableCell align="right">{order.status}</TableCell>
+             
               <TableCell align="right">
                 <Button size="small" color="primary" component={Link} to={`/admin/order/${order.id}`}>
                   Manage
