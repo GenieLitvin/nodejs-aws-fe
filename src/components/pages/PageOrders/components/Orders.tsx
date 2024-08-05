@@ -45,10 +45,10 @@ export default function Orders() {
           {orders.map((order: any) => (
             <TableRow key={order.id}>
               <TableCell component="th" scope="row">
-                {order.address?.firstName} {order.address?.lastName}
+                {order.delivery?.firstName} {order.delivery?.lastName}
               </TableCell>
               <TableCell align="right">{order.items.length}</TableCell>
-              <TableCell align="right">{order.address?.address}</TableCell>
+              <TableCell align="right">{order.delivery?.address}</TableCell>
               <TableCell align="right">{order.status}</TableCell>
              
               <TableCell align="right">
